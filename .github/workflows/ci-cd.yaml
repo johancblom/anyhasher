@@ -1,12 +1,6 @@
 name: CI Workflow
-on: 
-  push:
-    branch: olt
-    
-name: Continuous Integration
 on:
   [push]
-
 
 jobs:
   build: 
