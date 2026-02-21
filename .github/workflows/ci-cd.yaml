@@ -5,8 +5,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Cache Node Modules
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-cache
+
       - name: Checkout code
         uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13.x
+
       - run: cd backend && npm install
       - run: cd backend && npm run build
   lint:
@@ -14,15 +27,33 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v1
 
-      - name: Setup Node 16
-        uses: actions/setup-node@v4
+      - name: Setup Node 13
+        uses: actions/setup-node@v1
         with:
-          node-version: 16.x
+          node-version: 13.x
 
       - name: Install deps
         run: cd backend && npm i
 
       - name: 😂 Lint code
         run: cd backend && npm run lint
+
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup Node 13
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13.x
+
+      - name: Install deps
+        run: cd backend && npm i
+
+      - name: 🧪 Run tests
+        run: cd backend && npm run test
