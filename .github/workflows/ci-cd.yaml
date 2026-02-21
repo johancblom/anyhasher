@@ -1,12 +1,9 @@
 name: CI Workflow
-on:
-  [push]
+on: [push]
 
 jobs:
-  build: 
+  build:
     runs-on: ubuntu-latest
     steps:
-      run: cd backend && npm install
-      run: cd backend && npm run build
- 
-      
+      - run: cd backend && npm install
+      - run: cd backend && npm run build
